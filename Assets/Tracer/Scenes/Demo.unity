@@ -1388,12 +1388,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 430081616}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &430081618 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8824798981813657481, guid: 5a0a701375472d043a0b214a6990ec7a,
-    type: 3}
-  m_PrefabInstance: {fileID: 430081616}
+--- !u!114 &430081619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430081617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88966ea44a597b84aa3a5e176a91e133, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isMoving: 0
+  _isLooping: 0
+  _initializeByFirstPoint: 0
+  _movingSpeed: 10
+  _rotateSpeed: 360
+  _target: {fileID: 0}
+  pointsContent: {fileID: 8558234419731748405}
 --- !u!1 &504954296
 GameObject:
   m_ObjectHideFlags: 0
@@ -3982,7 +3995,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8558234419731748405}
   - component: {fileID: 8558234419731748402}
-  - component: {fileID: 8558234419731748404}
   m_Layer: 0
   m_Name: TraceManager
   m_TagString: Untagged
@@ -3990,24 +4002,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8558234419731748404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8558234419731748403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88966ea44a597b84aa3a5e176a91e133, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isMoving: 0
-  _isLooping: 1
-  _initializeByFirstPoint: 0
-  _movingSpeed: 10.33
-  _rotateSpeed: 350
-  _target: {fileID: 430081618}
 --- !u!4 &8558234419731748405
 Transform:
   m_ObjectHideFlags: 0

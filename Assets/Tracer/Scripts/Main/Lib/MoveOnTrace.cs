@@ -24,13 +24,9 @@ public class MoveOnTrace : MonoBehaviour
 
     [SerializeField]
     private Transform _target;
-    public Transform target
-    {
-        set
-        {
-            _target = value;
-        }
-    }
+
+    [SerializeField]
+    private Transform pointsContent;
 
     private TracePoint[] _points;
     private Transform _nextPoint;
@@ -38,9 +34,15 @@ public class MoveOnTrace : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
-        _points = GetComponentsInChildren<TracePoint>();
+        if (pointsContent == null)
+            pointsContent = transform;
+
+        if (_target == null)
+            _target = transform;
+
+        _points = pointsContent.GetComponentsInChildren<TracePoint>();
         InitializateTrace();
     }
 
@@ -111,6 +113,11 @@ public class MoveOnTrace : MonoBehaviour
         {
             _isMoving = false;
         }
+    }
+
+    public void StopMoving()
+    {
+        _isMoving = false;
     }
 
 }

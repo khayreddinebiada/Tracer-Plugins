@@ -19,7 +19,7 @@ namespace game.lib
         }
         public bool isStaticDistance = true;
         public float initDistance = 1;
-
+        
 
 
         public GameObject _lastChild
