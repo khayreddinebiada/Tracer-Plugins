@@ -13,9 +13,7 @@ public class TraceMaker : Editor
     SerializedProperty initDistance;
     SerializedProperty isStaticDistance;
 
-    private bool isActivatedAllInstantiates = true;
-
-    void OnEnable()
+    private void OnEnable()
     {
         localScaleInstantiateObject = serializedObject.FindProperty("localScaleInstantiateObject");
         isInstantiateObject = serializedObject.FindProperty("isInstantiateObject");
@@ -34,6 +32,7 @@ public class TraceMaker : Editor
         EditorGUILayout.PropertyField(instantiateObject);
         EditorGUILayout.PropertyField(initDistance);
         EditorGUILayout.PropertyField(isStaticDistance);
+
         TraceManager traceManager = (TraceManager)target;
         if (GUILayout.Button("Add Trace Point", GUILayout.Height(50)))
         {

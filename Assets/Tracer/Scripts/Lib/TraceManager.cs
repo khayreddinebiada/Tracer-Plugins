@@ -2,9 +2,11 @@
 
 namespace game.lib
 {
+
     public class TraceManager : MonoBehaviour
     {
-        
+
+
         public Vector3 localScaleInstantiateObject;
         public bool isInstantiateObject;
         public GameObject instantiateObject;
@@ -17,6 +19,7 @@ namespace game.lib
                 _activeInstantiates = value;
             }
         }
+
         public bool isStaticDistance = true;
         public float initDistance = 1;
         
@@ -68,19 +71,6 @@ namespace game.lib
                 transform.GetChild(transform.childCount - 1)
                 };
             }
-        }
-
-        private Vector3 GetRayBetweenTwoPoints()
-        {
-            Transform[] transforms = GetTwoLastPoints();
-            if(transforms == null)
-            {
-                Debug.LogError("You have not any point you can't check the rays");
-                return Vector3.zero;
-            }
-
-            print(transforms[1].position + " " + transforms[0].position);
-            return (transforms[1].position - transforms[0].position).normalized;
         }
 
         public GameObject AddTracePoint()

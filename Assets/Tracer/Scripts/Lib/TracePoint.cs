@@ -6,8 +6,10 @@ namespace game.lib
 {
     public class TracePoint : MonoBehaviour
     {
-        private Transform nextPoint;
+        [Range(0.001f, 1)]
+        public float speedOnPoint = 1;
 
+        private Transform nextPoint;
         private bool _isLastPoint = false;
 
         public TraceManager traceManager
@@ -66,20 +68,6 @@ namespace game.lib
 
             return this.transform.parent.GetChild(thisIndex + 1).GetComponent<Transform>();
         }
-
-        private Transform PreviousChild()
-        {
-            int thisIndex = this.transform.GetSiblingIndex();
-
-            if (this.transform.parent == null)
-                return null;
-
-            if (thisIndex == 0)
-                return this.transform.parent.GetChild(this.transform.parent.childCount - 1).GetComponent<Transform>();
-
-            return this.transform.parent.GetChild(thisIndex - 1).GetComponent<Transform>();
-        }
-
     }
 
 }
