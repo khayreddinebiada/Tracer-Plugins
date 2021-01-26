@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-namespace game.lib
+﻿using UnityEngine;
+
+namespace tracer
 {
     public class TracePoint : MonoBehaviour
     {
-        [Range(0.001f, 1)]
-        public float speedOnPoint = 1;
-
         private Transform nextPoint;
         private bool _isLastPoint = false;
 

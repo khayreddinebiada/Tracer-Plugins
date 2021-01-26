@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14cfe555aa1cfd45a48ad75e9a9bdc2, type: 3}
+  m_Name: TracerInfo Example
+  m_EditorClassIdentifier: 
+  _totalDistance: 20.521614
+  _points:
+  - position: {x: 0, y: 1.993, z: 0}
+  - position: {x: 0, y: 1.993, z: 1}
+  - position: {x: 0, y: 1.625, z: 1.966}
+  - position: {x: 0, y: 1.09, z: 2.799}
+  - position: {x: 0, y: 0.334, z: 3.372}
+  - position: {x: 0, y: -0.14199996, z: 4.215}
+  - position: {x: 0, y: -0.41700006, z: 5.205}
+  - position: {x: 0, y: -0.41700006, z: 6.205}
+  - position: {x: 0, y: 0.14700007, z: 7.362}
+  - position: {x: 0, y: 1.145, z: 8.3619995}
+  - position: {x: 0, y: 1.865, z: 9.3619995}
+  - position: {x: 0, y: 2.512, z: 10.3619995}
+  - position: {x: 0, y: 2.88, z: 11.3619995}
+  - position: {x: 0, y: 2.88, z: 12.3619995}
+  - position: {x: 0, y: 2.88, z: 13.3619995}
+  - position: {x: 0, y: 2.88, z: 14.3619995}
+  - position: {x: 0, y: 1.903, z: 15.3619995}
+  - position: {x: 0, y: 0.964, z: 16.362}
+  - position: {x: 0, y: -0.546, z: 16.876}

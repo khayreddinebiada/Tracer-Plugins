@@ -1,29 +1,22 @@
-﻿using game.lib;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(TracePoint))]
-public class TraceMakerPoint : Editor
+namespace tracer
 {
-
-    SerializedProperty speedOnPoint;
-
-    private void OnEnable()
+    [CustomEditor(typeof(TracePoint))]
+    public class TraceMakerPoint : Editor
     {
-        speedOnPoint = serializedObject.FindProperty("speedOnPoint");
-    }
-
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-        EditorGUILayout.PropertyField(speedOnPoint);
-
-        if (GUILayout.Button("Add Trace Point", GUILayout.Height(50)))
+        public override void OnInspectorGUI()
         {
-            TracePoint tracePoint = (TracePoint)target;
-            Selection.activeGameObject = tracePoint.traceManager.AddTracePoint();
-        }
+            serializedObject.Update();
 
-        serializedObject.ApplyModifiedProperties();
+            if (GUILayout.Button("Add Trace Point", GUILayout.Height(30)))
+            {
+                TracePoint tracePoint = (TracePoint)target;
+                Selection.activeGameObject = tracePoint.traceManager.AddTracePoint();
+            }
+
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 }

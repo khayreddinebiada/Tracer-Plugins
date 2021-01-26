@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
 
-namespace game.lib
+namespace tracer
 {
-
     public class TraceManager : MonoBehaviour
     {
-
-
         public Vector3 localScaleInstantiateObject;
         public bool isInstantiateObject;
         public GameObject instantiateObject;
@@ -22,8 +19,8 @@ namespace game.lib
 
         public bool isStaticDistance = true;
         public float initDistance = 1;
-        
 
+        public TracerInfo tracerInfo;
 
         public GameObject _lastChild
         {
@@ -75,7 +72,7 @@ namespace game.lib
 
         public GameObject AddTracePoint()
         {
-            GameObject obj = new GameObject("Point (" + transform.childCount + ")");
+            GameObject obj = new GameObject("Point");
             obj.transform.SetParent(transform);
             obj.AddComponent<TracePoint>();
 
@@ -99,6 +96,27 @@ namespace game.lib
 
             return obj;
         }
+
+        public void Generate()
+        {
+            tracerInfo.SavePath(GetComponentsInChildren<TracePoint>());
+            DeleteAllInstantiates();
+        }
+
+        /*
+        public void DeleteAllPoints()
+        {
+            TracePoint[] tracePoints = GetComponentsInChildren<TracePoint>();
+
+            for (int i = 0; i < tracePoints.Length; i++)
+            {
+                if (0 < tracePoints[i].transform.childCount)
+                {
+                    DestroyImmediate(tracePoints[i].gameObject);
+                }
+            }
+        }
+        */
 
         public void DeleteAllInstantiates()
         {
