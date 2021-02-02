@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace tracer
 {
@@ -16,6 +17,13 @@ namespace tracer
     [CreateAssetMenu(fileName = "TraceInfo", menuName = "Tracer/Path", order = 3)]
     public class TracerInfo : ScriptableObject
     {
+        public enum TransformType
+        {
+            Local, Global
+        }
+        [SerializeField]
+        private TransformType _transformType;
+
         [SerializeField]
         private float _totalDistance;
         public float totalDistance
@@ -42,6 +50,23 @@ namespace tracer
             }
 
             CalculateDistance();
+        }
+
+        public void LoadPath(Transform parent)
+        {
+            for (int i = 0; i < _points.Length; i++)
+            {
+                GameObject point = new GameObject("Point (" + parent.childCount + ")");
+                point.transform.SetParent(parent);
+                if (_transformType == TransformType.Global)
+                {
+                    point.transform.position = _points[i].position;
+                }
+                else
+                {
+                    point.transform.localPosition = _points[i].position;
+                }
+            }
         }
 
         private void CalculateDistance()

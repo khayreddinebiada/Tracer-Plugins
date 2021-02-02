@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace tracer
 {
@@ -17,10 +18,8 @@ namespace tracer
             }
         }
 
-        public bool isStaticDistance = true;
-        public float initDistance = 1;
-
-        public TracerInfo tracerInfo;
+        public string tracerName = "New TraceInfo";
+        public string path = "Assets/Tracer/Paths/";
 
         public GameObject _lastChild
         {
@@ -33,46 +32,9 @@ namespace tracer
             }
         }
 
-        private float DefineDistance()
-        {
-            if (isStaticDistance)
-                return initDistance;
-            else
-            {
-                if(3 <= transform.childCount)
-                {
-                    return Vector3.Distance(transform.GetChild(transform.childCount - 2).position, transform.GetChild(transform.childCount - 3).position);
-                }
-                else
-                    return initDistance;
-            }
-        }
-
-        private Transform[] GetTwoLastPoints()
-        {
-            if (transform.childCount == 0)
-                return null;
-            if (transform.childCount == 1)
-            {
-                return new Transform[]
-                {
-                transform,
-                transform.GetChild(0)
-                };
-            }
-            else
-            {
-                return new Transform[]
-                {
-                transform.GetChild(transform.childCount - 2),
-                transform.GetChild(transform.childCount - 1)
-                };
-            }
-        }
-
         public GameObject AddTracePoint()
         {
-            GameObject obj = new GameObject("Point");
+            GameObject obj = new GameObject("Point (" + transform.childCount + ")");
             obj.transform.SetParent(transform);
             obj.AddComponent<TracePoint>();
 
@@ -84,7 +46,7 @@ namespace tracer
             else
             {
                 Transform lastChild = transform.GetChild(transform.childCount - 2);
-                obj.transform.position = lastChild.position + transform.forward * DefineDistance();
+                obj.transform.position = lastChild.position;
                 obj.transform.rotation = lastChild.rotation;
             }
 
@@ -99,11 +61,18 @@ namespace tracer
 
         public void Generate()
         {
-            tracerInfo.SavePath(GetComponentsInChildren<TracePoint>());
-            DeleteAllInstantiates();
+#if UNITY_EDITOR
+            TracerInfo asset = ScriptableObject.CreateInstance("TracerInfo") as TracerInfo;
+            asset.SavePath(GetComponentsInChildren<TracePoint>());
+
+            AssetDatabase.CreateAsset(asset, path + tracerName + ".asset");
+            AssetDatabase.SaveAssets();
+            EditorUtility.FocusProjectWindow();
+            // Selection.activeObject = asset;
+            EditorUtility.SetDirty(this);
+#endif
         }
 
-        /*
         public void DeleteAllPoints()
         {
             TracePoint[] tracePoints = GetComponentsInChildren<TracePoint>();
@@ -113,20 +82,6 @@ namespace tracer
                 if (0 < tracePoints[i].transform.childCount)
                 {
                     DestroyImmediate(tracePoints[i].gameObject);
-                }
-            }
-        }
-        */
-
-        public void DeleteAllInstantiates()
-        {
-            TracePoint[] tracePoints = GetComponentsInChildren<TracePoint>();
-
-            for (int i = 0; i < tracePoints.Length; i++)
-            {
-                if (0 < tracePoints[i].transform.childCount)
-                {
-                    DestroyImmediate(tracePoints[i].transform.GetChild(0).gameObject);
                 }
             }
         }

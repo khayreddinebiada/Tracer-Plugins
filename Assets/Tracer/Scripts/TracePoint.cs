@@ -4,8 +4,8 @@ namespace tracer
 {
     public class TracePoint : MonoBehaviour
     {
+        public bool useGizmas = true;
         private Transform nextPoint;
-        private bool _isLastPoint = false;
 
         public TraceManager traceManager
         {
@@ -29,26 +29,27 @@ namespace tracer
             CheckIfLastPoint();
         }
 
-        private void CheckIfLastPoint()
+        public bool CheckIfLastPoint()
         {
             if (transform.GetSiblingIndex() == transform.parent.childCount - 1)
             {
-                _isLastPoint = true;
+                return true;
             }
             else
             {
-                _isLastPoint = false;
+                return false;
             }
         }
 
         private void OnDrawGizmos()
         {
             CheckIfLastPoint();
-            if (!_isLastPoint)
+            if (useGizmas)
             {
                 nextPoint = NextChild();
                 Gizmos.color = Color.red;
                 Gizmos.DrawLine(transform.position, nextPoint.position);
+                Gizmos.DrawSphere(transform.position, 0.1f);
             }
         }
 
