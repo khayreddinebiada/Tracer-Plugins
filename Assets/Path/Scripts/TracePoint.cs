@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-namespace tracer
-{
+namespace path
+{  
     public class TracePoint : MonoBehaviour
     {
         public bool useGizmas = true;

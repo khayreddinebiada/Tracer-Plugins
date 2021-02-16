@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace tracer
+namespace path
 {
     public class MoveOnTrace : MonoBehaviour
     {
@@ -42,35 +42,26 @@ namespace tracer
         public delegate void Action();
         protected event Action onPathEnd;
 
+        private TracerInfo.TransformType _transformType;
+
         private void Awake()
         {
             if (_points == null)
+            {
                 Debug.LogError("You need add tracer info...");
+                enabled = false;
+            }
 
             if (_target == null)
                 _target = transform;
-        }
 
+            _transformType = _points.transformType;
+        }
 
         // Start is called before the first frame update
         protected void Start()
         {
             InitializateTrace();
-        }
-
-        // Update is called once per frame
-        protected void FixedUpdate()
-        {
-            if (!_isMoving || _target == null)
-                return;
-
-            _target.position = Vector3.MoveTowards(_target.position, _nextPoint, _mSpeed * Time.fixedDeltaTime);
-            //_target.rotation = Quaternion.RotateTowards(_target.rotation, _nextPoint.rotation, _rotateSpeed * Time.fixedDeltaTime);
-
-            if (Vector3.Distance(_target.position, _nextPoint) <= 0.05f)
-            {
-                GoNext();
-            }
         }
 
         private void InitializateTrace()
@@ -79,6 +70,7 @@ namespace tracer
             if (_points.points.Length == 0)
             {
                 Debug.LogError("No points for trace...");
+                enabled = false;
                 return;
             }
             if (_initializeByFirstPoint && _points.points.Length == 1)
@@ -103,6 +95,35 @@ namespace tracer
             {
                 _indexNextPoint = 0;
                 _nextPoint = _points.points[_indexNextPoint].position;
+            }
+        }
+
+        // Update is called once per frame
+        protected void FixedUpdate()
+        {
+            if (!_isMoving || _target == null)
+                return;
+
+            if (_transformType == TracerInfo.TransformType.Global)
+            {
+                _target.position = Vector3.MoveTowards(_target.position, _nextPoint, _mSpeed * Time.fixedDeltaTime);
+                if (Vector3.Distance(_target.position, _nextPoint) <= 0.05f)
+                {
+                    GoNext();
+                }
+            }
+            else
+            {
+                _target.localPosition = Vector3.MoveTowards(_target.localPosition, _nextPoint, _mSpeed * Time.fixedDeltaTime);
+                if (Vector3.Distance(_target.localPosition, _nextPoint) <= 0.05f)
+                {
+                    GoNext();
+                }
+            }
+
+            if (Vector3.Distance(_target.position, _nextPoint) <= 0.05f)
+            {
+                GoNext();
             }
         }
 

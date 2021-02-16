@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace tracer
+namespace path
 {
     [CustomEditor(typeof(TracePoint))]
     public class TraceMakerPoint : Editor

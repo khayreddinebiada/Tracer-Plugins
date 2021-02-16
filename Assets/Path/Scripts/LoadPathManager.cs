@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace tracer
+namespace path
 {
     public class LoadPathManager : MonoBehaviour
     {

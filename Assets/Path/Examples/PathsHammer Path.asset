@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e14cfe555aa1cfd45a48ad75e9a9bdc2, type: 3}
+  m_Name: PathsHammer Path
+  m_EditorClassIdentifier: 
+  _transformType: 0
+  _totalDistance: 62.942932
+  _points:
+  - position: {x: 0, y: 1.993, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: 2.74, y: 1.993, z: 3.62}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: 0.03, y: 1.993, z: 5.95}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: -3.12, y: 1.993, z: 4.2}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: -0.16, y: 1.993, z: 2.92}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: -2.78, y: 1.993, z: 0.34}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: -7.5, y: 8.343, z: -3.16}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: 6.74, y: 1.993, z: -11.05}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: 8.04, y: -1.697, z: -3.07}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - position: {x: 2.49, y: 3.913, z: 1.87}
+    rotation: {x: 0, y: 0, z: 0, w: 1}

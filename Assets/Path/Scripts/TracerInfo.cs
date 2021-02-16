@@ -1,16 +1,24 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace tracer
+namespace path
 {
     [System.Serializable]
     public class PointInfo
     {
         public Vector3 position;
+        public Quaternion rotation;
 
         public PointInfo(Vector3 position)
         {
             this.position = position;
+            this.rotation = Quaternion.identity;
+        }
+
+        public PointInfo(Vector3 position, Quaternion rotation)
+        {
+            this.position = position;
+            this.rotation = rotation;
         }
     }
 
@@ -21,8 +29,13 @@ namespace tracer
         {
             Local, Global
         }
+
         [SerializeField]
         private TransformType _transformType;
+        public TransformType transformType
+        {
+            get { return _transformType; }
+        }
 
         [SerializeField]
         private float _totalDistance;

@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace tracer
+namespace path
 {
     public class TraceManager : MonoBehaviour
     {

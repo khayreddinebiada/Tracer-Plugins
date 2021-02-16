@@ -1,4 +1,4 @@
-﻿namespace tracer
+﻿namespace path
 {
     public class StaticMove : MoveOnTrace
     {
