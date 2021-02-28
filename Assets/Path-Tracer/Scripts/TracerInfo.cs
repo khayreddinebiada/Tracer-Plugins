@@ -69,7 +69,10 @@ namespace path
         {
             for (int i = 0; i < _points.Length; i++)
             {
+                
                 GameObject point = new GameObject("Point (" + parent.childCount + ")");
+                point.AddComponent(typeof(TracePoint));
+
                 point.transform.SetParent(parent);
                 if (_transformType == TransformType.Global)
                 {

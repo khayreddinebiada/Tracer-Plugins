@@ -9,7 +9,6 @@ namespace path
         [SerializeField]
         private AnimationCurve _speedMoving;
 
-        [SerializeField]
         private float _time = 0;
 
         // Start is called before the first frame update

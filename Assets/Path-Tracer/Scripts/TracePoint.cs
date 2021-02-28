@@ -43,7 +43,6 @@ namespace path
 
         private void OnDrawGizmos()
         {
-            CheckIfLastPoint();
             if (useGizmas)
             {
                 nextPoint = NextChild();
@@ -55,15 +54,25 @@ namespace path
 
         private Transform NextChild()
         {
-            int thisIndex = this.transform.GetSiblingIndex();
-            if (this.transform.parent == null)
+            int thisIndex = transform.GetSiblingIndex();
+            if (transform.parent == null)
                 return null;
 
-            if (this.transform.parent.childCount <= thisIndex + 1)
-                return this.transform.parent.GetChild(0).GetComponent<Transform>();
+            if (transform.parent.childCount <= thisIndex + 1)
+                return transform.parent.GetChild(0).GetComponent<Transform>();
 
-            return this.transform.parent.GetChild(thisIndex + 1).GetComponent<Transform>();
+            return transform.parent.GetChild(thisIndex + 1).GetComponent<Transform>();
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (0 <= transform.childCount)
+            {
+
+            }
+        }
+#endif
     }
 
 }

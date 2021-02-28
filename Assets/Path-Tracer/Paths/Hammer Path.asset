@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e14cfe555aa1cfd45a48ad75e9a9bdc2, type: 3}
-  m_Name: PathsHammer Path
+  m_Name: Hammer Path
   m_EditorClassIdentifier: 
   _transformType: 0
-  _totalDistance: 62.942932
+  _totalDistance: 58.701653
   _points:
   - position: {x: 0, y: 1.993, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 1}
@@ -27,7 +27,7 @@ MonoBehaviour:
     rotation: {x: 0, y: 0, z: 0, w: 1}
   - position: {x: -2.78, y: 1.993, z: 0.34}
     rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: -7.5, y: 8.343, z: -3.16}
+  - position: {x: -3.736, y: 8.343, z: -3.16}
     rotation: {x: 0, y: 0, z: 0, w: 1}
   - position: {x: 6.74, y: 1.993, z: -11.05}
     rotation: {x: 0, y: 0, z: 0, w: 1}

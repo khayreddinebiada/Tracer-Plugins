@@ -8,7 +8,6 @@ namespace path
     public class TraceMaker : Editor
     {
         SerializedProperty localScaleInstantiateObject;
-        SerializedProperty isInstantiateObject;
         SerializedProperty instantiateObject;
         SerializedProperty tracerName;
         SerializedProperty path;
@@ -16,7 +15,6 @@ namespace path
         private void OnEnable()
         {
             localScaleInstantiateObject = serializedObject.FindProperty("localScaleInstantiateObject");
-            isInstantiateObject = serializedObject.FindProperty("isInstantiateObject");
             instantiateObject = serializedObject.FindProperty("instantiateObject");
             tracerName = serializedObject.FindProperty("tracerName");
             path = serializedObject.FindProperty("path");
@@ -24,25 +22,27 @@ namespace path
 
         public override void OnInspectorGUI()
         {
-            EditorGUILayout.LabelField("Settings");
+            GUIStyle header = new GUIStyle(GUI.skin.label);
+            header.margin = new RectOffset(25, 20, 20, 5);
+            header.fontStyle = FontStyle.Bold;
+
+            EditorGUILayout.LabelField("Settings", header);
 
             serializedObject.Update();
             EditorGUILayout.PropertyField(localScaleInstantiateObject);
-            EditorGUILayout.PropertyField(isInstantiateObject);
             EditorGUILayout.PropertyField(instantiateObject);
             EditorGUILayout.PropertyField(tracerName);
             EditorGUILayout.PropertyField(path);
 
-            EditorGUILayout.LabelField("");
-            EditorGUILayout.LabelField("Buttons");
+            EditorGUILayout.LabelField("Buttons", header);
 
             TraceManager traceManager = (TraceManager)target;
-            if (GUILayout.Button("Make Trace", GUILayout.Height(50)))
+            if (GUILayout.Button("Make Trace", GUILayout.Height(30)))
             {
                 traceManager.AddTracePoint();
-                Selection.activeGameObject = traceManager._lastChild;
+                Selection.activeGameObject = traceManager.lastChild;
             }
-
+            
             if (GUILayout.Button("Activated All Instantiates", GUILayout.Height(30)))
             {
                 traceManager.AllInstantiatesActive(true);
@@ -52,19 +52,20 @@ namespace path
                 traceManager.AllInstantiatesActive(false);
             }
 
-            EditorGUILayout.LabelField("");
-            EditorGUILayout.HelpBox("If you will click 'Generate' you will replace old points",MessageType.Info);
-            if (GUILayout.Button("Generate", GUILayout.Height(40)))
+            if (GUILayout.Button("Delete All Points", GUILayout.Height(20)))
+            {
+                if (EditorUtility.DisplayDialog("Delete all points", "You will delete all TracePoint in children of TraceManager.", "Delete", "Cancel"))
+                {
+                    traceManager.DeleteAllPoints();
+                }
+            }
+
+            EditorGUILayout.LabelField("Generate", header);
+            if (GUILayout.Button("Generate", GUILayout.Height(50)))
             {
                 traceManager.Generate();
             }
 
-            EditorGUILayout.LabelField("");
-            EditorGUILayout.HelpBox("You will delete all points", MessageType.Warning);
-            if (GUILayout.Button("Delete All Points", GUILayout.Height(20)))
-            {
-                traceManager.DeleteAllPoints();
-            }
 
             serializedObject.ApplyModifiedProperties();
         }

@@ -6,22 +6,13 @@ namespace path
     public class TraceManager : MonoBehaviour
     {
         public Vector3 localScaleInstantiateObject;
-        public bool isInstantiateObject;
         public GameObject instantiateObject;
-        public bool _activeInstantiates;
-        public bool activeInstantiates
-        {
-            set
-            {
-                AllInstantiatesActive(value);
-                _activeInstantiates = value;
-            }
-        }
+        public bool activeInstantiates;
 
         public string tracerName = "New TraceInfo";
-        public string path = "Assets/Tracer/Paths/";
+        public string path = "Assets/Path-Tracer/Paths/";
 
-        public GameObject _lastChild
+        public GameObject lastChild
         {
             get 
             {
@@ -34,7 +25,7 @@ namespace path
 
         public GameObject AddTracePoint()
         {
-            GameObject obj = new GameObject("Point (" + transform.childCount + ")");
+            GameObject obj = new GameObject("Point");
             obj.transform.SetParent(transform);
             obj.AddComponent<TracePoint>();
 
@@ -50,7 +41,7 @@ namespace path
                 obj.transform.rotation = lastChild.rotation;
             }
 
-            if (isInstantiateObject)
+            if (instantiateObject != null)
             {
                 GameObject instace = Instantiate(instantiateObject, obj.transform.position, obj.transform.rotation, obj.transform);
                 instace.transform.localScale = localScaleInstantiateObject;
@@ -65,9 +56,15 @@ namespace path
             TracerInfo asset = ScriptableObject.CreateInstance("TracerInfo") as TracerInfo;
             asset.SavePath(GetComponentsInChildren<TracePoint>());
 
-            AssetDatabase.CreateAsset(asset, path + tracerName + ".asset");
+            print(AssetDatabase.GenerateUniqueAssetPath(path + tracerName + ".asset"));
+            AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath(path + tracerName + ".asset"));
             AssetDatabase.SaveAssets();
+            LoadPathManager loadPathManager = GetComponent<LoadPathManager>();
+            if (loadPathManager != null)
+                loadPathManager.tracerInfo = asset;
             EditorUtility.FocusProjectWindow();
+
+            EditorGUIUtility.PingObject(asset);
             // Selection.activeObject = asset;
             EditorUtility.SetDirty(this);
 #endif
@@ -77,13 +74,20 @@ namespace path
         {
             TracePoint[] tracePoints = GetComponentsInChildren<TracePoint>();
 
+            Debug.Log(tracePoints.Length);
+            foreach (TracePoint tracePoint in tracePoints)
+            {
+                DestroyImmediate(tracePoint.gameObject);
+            }
+            /*
             for (int i = 0; i < tracePoints.Length; i++)
             {
                 if (0 < tracePoints[i].transform.childCount)
                 {
-                    DestroyImmediate(tracePoints[i].gameObject);
+
                 }
             }
+            */
         }
 
         public void AllInstantiatesActive(bool activate)
