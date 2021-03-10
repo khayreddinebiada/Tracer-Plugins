@@ -12,7 +12,7 @@ namespace path
         public PointInfo(Vector3 position)
         {
             this.position = position;
-            this.rotation = Quaternion.identity;
+            rotation = Quaternion.identity;
         }
 
         public PointInfo(Vector3 position, Quaternion rotation)
@@ -58,7 +58,7 @@ namespace path
 
             for (int i = 0; i < tracePoints.Length; i++)
             {
-                PointInfo pInfo = new PointInfo(tracePoints[i].transform.position);
+                PointInfo pInfo = new PointInfo(tracePoints[i].transform.position, tracePoints[i].transform.rotation);
                 points[i] = pInfo;
             }
 

@@ -10,14 +10,14 @@ namespace path
         SerializedProperty localScaleInstantiateObject;
         SerializedProperty instantiateObject;
         SerializedProperty tracerName;
-        SerializedProperty path;
+        SerializedProperty replacePath;
 
         private void OnEnable()
         {
             localScaleInstantiateObject = serializedObject.FindProperty("localScaleInstantiateObject");
             instantiateObject = serializedObject.FindProperty("instantiateObject");
             tracerName = serializedObject.FindProperty("tracerName");
-            path = serializedObject.FindProperty("path");
+            replacePath = serializedObject.FindProperty("replacePath");
         }
 
         public override void OnInspectorGUI()
@@ -32,17 +32,22 @@ namespace path
             EditorGUILayout.PropertyField(localScaleInstantiateObject);
             EditorGUILayout.PropertyField(instantiateObject);
             EditorGUILayout.PropertyField(tracerName);
-            EditorGUILayout.PropertyField(path);
+            EditorGUILayout.PropertyField(replacePath);
+
+            TraceManager traceManager = (TraceManager)target;
+
+            GUILayout.BeginHorizontal("box");
+            GUILayout.Label("Path Info saved in:   " + traceManager.path);
+            GUILayout.EndHorizontal();
 
             EditorGUILayout.LabelField("Buttons", header);
 
-            TraceManager traceManager = (TraceManager)target;
             if (GUILayout.Button("Make Trace", GUILayout.Height(30)))
             {
                 traceManager.AddTracePoint();
                 Selection.activeGameObject = traceManager.lastChild;
             }
-            
+
             if (GUILayout.Button("Activated All Instantiates", GUILayout.Height(30)))
             {
                 traceManager.AllInstantiatesActive(true);

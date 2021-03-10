@@ -8,10 +8,14 @@ namespace path
         public Vector3 localScaleInstantiateObject;
         public GameObject instantiateObject;
         public bool activeInstantiates;
+        public bool replacePath = false;
 
-        public string tracerName = "New TraceInfo";
-        public string path = "Assets/Path-Tracer/Paths/";
-
+        public string tracerName = "PathInfo";
+        private string _path = "Assets/Path-Tracer/Paths/";
+        public string path
+        {
+            get { return _path; }
+        }
         public GameObject lastChild
         {
             get 
@@ -55,9 +59,11 @@ namespace path
 #if UNITY_EDITOR
             TracerInfo asset = ScriptableObject.CreateInstance("TracerInfo") as TracerInfo;
             asset.SavePath(GetComponentsInChildren<TracePoint>());
+            if (!replacePath)
+                AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath(path + tracerName + ".asset"));
+            else
+                AssetDatabase.CreateAsset(asset, path + tracerName + ".asset");
 
-            print(AssetDatabase.GenerateUniqueAssetPath(path + tracerName + ".asset"));
-            AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath(path + tracerName + ".asset"));
             AssetDatabase.SaveAssets();
             LoadPathManager loadPathManager = GetComponent<LoadPathManager>();
             if (loadPathManager != null)
@@ -79,15 +85,6 @@ namespace path
             {
                 DestroyImmediate(tracePoint.gameObject);
             }
-            /*
-            for (int i = 0; i < tracePoints.Length; i++)
-            {
-                if (0 < tracePoints[i].transform.childCount)
-                {
-
-                }
-            }
-            */
         }
 
         public void AllInstantiatesActive(bool activate)

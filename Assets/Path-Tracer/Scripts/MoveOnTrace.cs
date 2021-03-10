@@ -16,35 +16,51 @@ namespace path
         }
 
         [SerializeField]
-        private float _mSpeed = 10;
-        protected float mSpeed
+        private float _movingSpeed = 10;
+        protected float movingSpeed
         {
-            get { return _mSpeed; }
-            set { _mSpeed = value; }
+            get { return _movingSpeed; }
+            set { _movingSpeed = value; }
         }
-
-
-        [SerializeField]
-        protected TracerInfo _points;
-
-        [SerializeField]
-        protected bool _initializeByFirstPoint;
-
-        [SerializeField]
-        protected Transform _target;
-
-        protected Vector3 _nextPoint;
-        protected int _indexNextPoint;
 
         [SerializeField]
         private bool _isLooping = false;
 
+        [SerializeField]
+        protected TracerInfo _points;
+
+
+
+        [Header("Settings")]
+        [SerializeField]
+        protected bool _initializeByFirstPoint = true;
+
+        [SerializeField]
+        protected Transform _target;
+
+        protected Vector3 _nextPosition;
+        protected Quaternion _nextRotation;
+        protected int _indexNextPoint;
+
+        private float _rotateSpeed = 0;
+
         public delegate void Action();
-        protected event Action onPathEnd;
+        private event Action _onPathEnd;
+        public event Action onPathEnd
+        {
+            add
+            {
+                _onPathEnd += value;
+            }
+            remove
+            {
+                _onPathEnd -= value;
+            }
+        }
 
         private TracerInfo.TransformType _transformType;
 
-        private void Awake()
+        protected void Awake()
         {
             if (_points == null)
             {
@@ -88,14 +104,19 @@ namespace path
             if (_initializeByFirstPoint)
             {
                 _indexNextPoint = 1;
-                _nextPoint = _points.points[_indexNextPoint].position;
+                _nextPosition = _points.points[_indexNextPoint].position;
+                _nextRotation = _points.points[_indexNextPoint].rotation;
                 _target.position = _points.points[0].position;
+                _target.rotation = _points.points[0].rotation;
             }
             else
             {
                 _indexNextPoint = 0;
-                _nextPoint = _points.points[_indexNextPoint].position;
+                _nextPosition = _points.points[_indexNextPoint].position;
+                _nextRotation = _points.points[_indexNextPoint].rotation;
             }
+
+            DefineRotateSpeed();
         }
 
         // Update is called once per frame
@@ -106,22 +127,24 @@ namespace path
 
             if (_transformType == TracerInfo.TransformType.Global)
             {
-                _target.position = Vector3.MoveTowards(_target.position, _nextPoint, _mSpeed * Time.fixedDeltaTime);
-                if (Vector3.Distance(_target.position, _nextPoint) <= 0.05f)
+                _target.position = Vector3.MoveTowards(_target.position, _nextPosition, _movingSpeed * Time.fixedDeltaTime);
+                if (Vector3.Distance(_target.position, _nextPosition) <= 0.05f)
                 {
                     GoNext();
                 }
             }
             else
             {
-                _target.localPosition = Vector3.MoveTowards(_target.localPosition, _nextPoint, _mSpeed * Time.fixedDeltaTime);
-                if (Vector3.Distance(_target.localPosition, _nextPoint) <= 0.05f)
+                _target.localPosition = Vector3.MoveTowards(_target.localPosition, _nextPosition, _movingSpeed * Time.fixedDeltaTime);
+                if (Vector3.Distance(_target.localPosition, _nextPosition) <= 0.05f)
                 {
                     GoNext();
                 }
             }
 
-            if (Vector3.Distance(_target.position, _nextPoint) <= 0.05f)
+            _target.rotation = Quaternion.RotateTowards(_target.rotation, _nextRotation, _rotateSpeed * Time.fixedDeltaTime);
+
+            if (Vector3.Distance(_target.position, _nextPosition) <= 0.05f)
             {
                 GoNext();
             }
@@ -129,19 +152,33 @@ namespace path
 
         private void GoNext()
         {
+
+            _target.rotation = _points.points[_indexNextPoint].rotation;
+
             _indexNextPoint++;
             if (_indexNextPoint == _points.points.Length)
             {
                 EndPath();
                 _indexNextPoint = 0;
             }
-            _nextPoint = _points.points[_indexNextPoint].position;
+            _nextPosition = _points.points[_indexNextPoint].position;
+            _nextRotation = _points.points[_indexNextPoint].rotation;
+
+            DefineRotateSpeed();
+        }
+
+        private void DefineRotateSpeed()
+        {
+            float distancePoints = Vector3.Distance(_nextPosition, _target.position);
+            float deferenceAngle = Quaternion.Angle(transform.rotation, _nextRotation);
+            
+            _rotateSpeed = deferenceAngle * _movingSpeed / distancePoints;
         }
 
         private void EndPath()
         {
-            if(onPathEnd != null)
-                onPathEnd.Invoke();
+            if (_onPathEnd != null)
+                _onPathEnd.Invoke();
 
             if (!_isLooping)
             {
@@ -159,5 +196,7 @@ namespace path
         {
             return _points.totalDistance;
         }
+
+
     }
 }

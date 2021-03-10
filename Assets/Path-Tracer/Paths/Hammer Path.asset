@@ -13,25 +13,15 @@ MonoBehaviour:
   m_Name: Hammer Path
   m_EditorClassIdentifier: 
   _transformType: 0
-  _totalDistance: 58.701653
+  _totalDistance: 20.927908
   _points:
   - position: {x: 0, y: 1.993, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: 2.74, y: 1.993, z: 3.62}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: 0.03, y: 1.993, z: 5.95}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: -3.12, y: 1.993, z: 4.2}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: -0.16, y: 1.993, z: 2.92}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: -2.78, y: 1.993, z: 0.34}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: -3.736, y: 8.343, z: -3.16}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: 6.74, y: 1.993, z: -11.05}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: 8.04, y: -1.697, z: -3.07}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
-  - position: {x: 2.49, y: 3.913, z: 1.87}
-    rotation: {x: 0, y: 0, z: 0, w: 1}
+    rotation: {x: 0.40075678, y: -0, z: -0, w: 0.9161845}
+  - position: {x: 0, y: 1.993, z: 5.56}
+    rotation: {x: -0.4840057, y: -0.2928806, z: 0.42690328, w: 0.7054878}
+  - position: {x: 0, y: 4.1029997, z: 10.9}
+    rotation: {x: 0.39278147, y: -0.07955414, z: -0.1818715, w: 0.89795136}
+  - position: {x: 0, y: -0.19700003, z: 12.63}
+    rotation: {x: -0.874886, y: -0.25539824, z: 0.115238786, w: 0.39505228}
+  - position: {x: 0, y: -4.637, z: 14.91}
+    rotation: {x: 0.40075678, y: -0, z: -0, w: 0.9161845}

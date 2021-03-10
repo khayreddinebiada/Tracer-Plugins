@@ -2,10 +2,18 @@
 {
     public class StaticMove : MoveOnTrace
     {
-        public float movingSpeed
+        public float speed
         {
-            set { mSpeed = value; }
-            get { return mSpeed; }
+            set { movingSpeed = value; }
+            get { return movingSpeed; }
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_target == null)
+                _target = transform;
+        }
+#endif
     }
 }
