@@ -43,7 +43,7 @@ namespace path
             _time = 0;
         }
 
-        /*
+        
 #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -51,6 +51,6 @@ namespace path
             if (_target == null)
                 _target = base.transform;
         }
-#endif*/
+#endif
     }
 }
