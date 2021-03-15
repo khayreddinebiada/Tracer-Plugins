@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e14cfe555aa1cfd45a48ad75e9a9bdc2, type: 3}
   m_Name: Hammer Path
   m_EditorClassIdentifier: 
-  _transformType: 0
-  _totalDistance: 20.927908
+  _transformType: 1
+  _totalDistance: 20.729208
   _points:
   - position: {x: 0, y: 1.993, z: 0}
     rotation: {x: 0.40075678, y: -0, z: -0, w: 0.9161845}
-  - position: {x: 0, y: 1.993, z: 5.56}
+  - position: {x: 0, y: 3.133, z: 5.56}
     rotation: {x: -0.4840057, y: -0.2928806, z: 0.42690328, w: 0.7054878}
   - position: {x: 0, y: 4.1029997, z: 10.9}
     rotation: {x: 0.39278147, y: -0.07955414, z: -0.1818715, w: 0.89795136}

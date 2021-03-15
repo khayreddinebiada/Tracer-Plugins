@@ -559,7 +559,7 @@ PrefabInstance:
     - target: {fileID: 8824798981813657481, guid: 5a0a701375472d043a0b214a6990ec7a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9312578
+      value: -0.9312577
       objectReference: {fileID: 0}
     - target: {fileID: 8824798981813657481, guid: 5a0a701375472d043a0b214a6990ec7a,
         type: 3}
@@ -640,13 +640,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 430081617}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88966ea44a597b84aa3a5e176a91e133, type: 3}
+  m_Script: {fileID: 11500000, guid: dc86972941958574c978f9bcd1139931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isMoving: 0
-  _movingSpeed: 1
-  _isLooping: 0
-  _points: {fileID: 11400000, guid: 8e6cd3fb826272e439555dbc869afeb9, type: 2}
+  _isMoving: 1
+  _movingSpeed: 100
+  _isLooping: 1
+  _points: {fileID: 11400000, guid: 88d2f012302438646a7fbe1e91462911, type: 2}
+  _initializeByFirstPoint: 1
+  _target: {fileID: 430081618}
+--- !u!114 &430081620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430081617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc86972941958574c978f9bcd1139931, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isMoving: 1
+  _movingSpeed: 100
+  _isLooping: 1
+  _points: {fileID: 11400000, guid: 6c3d424178a6deb4bbf29fba146a4684, type: 2}
   _initializeByFirstPoint: 1
   _target: {fileID: 430081618}
 --- !u!1 &557276036
@@ -1571,7 +1589,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900946830}
   m_LocalRotation: {x: -0.4840057, y: -0.2928806, z: 0.42690328, w: 0.7054878}
-  m_LocalPosition: {x: 0, y: 0, z: 5.56}
+  m_LocalPosition: {x: 0, y: 1.14, z: 5.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 557276037}

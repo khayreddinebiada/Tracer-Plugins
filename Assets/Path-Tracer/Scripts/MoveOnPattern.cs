@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace path
 {
-    public class MoveOnTrace : MonoBehaviour
+    public class MoveOnPattern : MonoBehaviour
     {
         [Header("Transformation")]
         [SerializeField]
@@ -42,8 +40,12 @@ namespace path
         protected Quaternion _nextRotation;
         protected int _indexNextPoint;
 
+        private Vector3 _rangePosition;
+
         private float _rotateSpeed = 0;
 
+        private float _distanceToNext;
+        private Vector3 _directionMove;
 
         public delegate void Action();
         private event Action _onPathEnd;
@@ -59,8 +61,6 @@ namespace path
             }
         }
 
-        private TracerInfo.TransformType _transformType;
-
         protected void Awake()
         {
             if (_points == null)
@@ -71,8 +71,6 @@ namespace path
 
             if (_target == null)
                 _target = transform;
-
-            _transformType = _points.transformType;
         }
 
         // Start is called before the first frame update
@@ -109,6 +107,7 @@ namespace path
                 _nextRotation = _points.points[_indexNextPoint].rotation;
                 _target.position = _points.points[0].position;
                 _target.rotation = _points.points[0].rotation;
+
             }
             else
             {
@@ -118,6 +117,7 @@ namespace path
             }
 
             DefineRotateSpeed();
+            UpdateDistance();
         }
 
         // Update is called once per frame
@@ -126,50 +126,56 @@ namespace path
             if (!_isMoving || _target == null)
                 return;
 
-            if (_transformType == TracerInfo.TransformType.Global)
-            {
-                _target.position = Vector3.MoveTowards(_target.position, _nextPosition, _movingSpeed * Time.fixedDeltaTime);
-                if (Vector3.Distance(_target.position, _nextPosition) <= 0.05f)
-                {
-                    GoNext();
-                }
-            }
+            float speed = Time.fixedDeltaTime * _movingSpeed;
+            Vector3 vect = _directionMove * speed;
+
+            if (vect.magnitude < _distanceToNext)
+                _target.position += vect;
             else
             {
-                _target.localPosition = Vector3.MoveTowards(_target.localPosition, _nextPosition, _movingSpeed * Time.fixedDeltaTime);
-                if (Vector3.Distance(_target.localPosition, _nextPosition) <= 0.05f)
-                {
-                    GoNext();
-                }
+                _target.position += _distanceToNext * _directionMove;
             }
 
+            _distanceToNext = Mathf.Clamp(_distanceToNext - _directionMove.magnitude * speed, 0, Mathf.Infinity);
             _target.rotation = Quaternion.RotateTowards(_target.rotation, _nextRotation, _rotateSpeed * Time.fixedDeltaTime);
+
+            if (_distanceToNext <= 0)
+            {
+                GoNext();
+            }
         }
 
         private void GoNext()
         {
 
             _target.rotation = _points.points[_indexNextPoint].rotation;
-            _target.position = _points.points[_indexNextPoint].position;
 
+            _rangePosition += _target.position - _nextPosition;
             _indexNextPoint++;
             if (_indexNextPoint == _points.points.Length)
             {
                 EndPath();
                 _indexNextPoint = 0;
             }
-            _nextPosition = _points.points[_indexNextPoint].position;
+            _nextPosition = _points.points[_indexNextPoint].position + _rangePosition;
             _nextRotation = _points.points[_indexNextPoint].rotation;
 
             DefineRotateSpeed();
+            UpdateDistance();
         }
 
         private void DefineRotateSpeed()
         {
             float distancePoints = Vector3.Distance(_nextPosition, _target.position);
             float deferenceAngle = Quaternion.Angle(transform.rotation, _nextRotation);
-            
+
             _rotateSpeed = deferenceAngle * _movingSpeed / distancePoints;
+        }
+
+        private void UpdateDistance()
+        {
+            _distanceToNext = Vector3.Distance(transform.position, _nextPosition);
+            _directionMove = Vector3.ClampMagnitude(_nextPosition - transform.position, 1);
         }
 
         private void EndPath()
@@ -187,12 +193,10 @@ namespace path
         {
             _isMoving = false;
         }
-        
+
         public float TotalDistance()
         {
             return _points.totalDistance;
         }
-
-
     }
 }
