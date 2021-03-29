@@ -1,21 +1,32 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace path
 {
+    public enum TransformType
+    {
+        Local, Global
+    }
+
     public class TraceManager : MonoBehaviour
     {
-        public Vector3 localScaleInstantiateObject;
-        public GameObject instantiateObject;
         public bool activeInstantiates;
+        public Vector3 localScaleInstantiateObject = new Vector3(1, 1, 1);
+        public GameObject instantiateObject;
+
         public bool replacePath = false;
 
+        
         public string tracerName = "PathInfo";
-        private string _path = "Assets/Path-Tracer/Paths/";
-        public string path
+        private string _folderName = "Paths";
+
+        private string _pathFolder = "/Resources/";
+        public string pathFile
         {
-            get { return _path; }
+            get { return _pathFolder + _folderName; }
         }
+
         public GameObject lastChild
         {
             get 
@@ -56,26 +67,71 @@ namespace path
 
         public void Generate()
         {
+
 #if UNITY_EDITOR
-            TracerInfo asset = ScriptableObject.CreateInstance("TracerInfo") as TracerInfo;
-            asset.SavePath(GetComponentsInChildren<TracePoint>());
+            if (!Directory.Exists(pathFile))
+            {
+                Directory.CreateDirectory(Application.dataPath + pathFile);
+            }
+
+            TracerInfo asset;
             if (!replacePath)
-                AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath(path + tracerName + ".asset"));
+            {
+                asset = CreateTracerInfo();
+                AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath("Assets" + pathFile + "/" + tracerName + ".asset"));
+            }
             else
-                AssetDatabase.CreateAsset(asset, path + tracerName + ".asset");
+            {
+                string [] assetNames  = AssetDatabase.FindAssets(tracerName + " t:TracerInfo", new[] { "Assets" + pathFile });
+                if (assetNames != null && 0 < assetNames.Length)
+                {
+                    asset = AssetDatabase.LoadAssetAtPath<TracerInfo>(AssetDatabase.GUIDToAssetPath(assetNames[0]));
+
+                    for (int i = 1; i < assetNames.Length; i++)
+                    {
+                        TracerInfo tr = AssetDatabase.LoadAssetAtPath<TracerInfo>(AssetDatabase.GUIDToAssetPath(assetNames[i]));
+
+                        if (tr != null && tr.name == tracerName)
+                        {
+                            asset = tr;
+                        }
+                    }
+                }
+                else
+                {
+                    asset = CreateTracerInfo();
+                    AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath("Assets" + pathFile + "/" + tracerName + ".asset"));
+                }
+
+                asset.SavePath(GetComponentsInChildren<TracePoint>());
+            }
 
             AssetDatabase.SaveAssets();
+
             LoadPathManager loadPathManager = GetComponent<LoadPathManager>();
+
             if (loadPathManager != null)
                 loadPathManager.tracerInfo = asset;
+
             EditorUtility.FocusProjectWindow();
 
             EditorGUIUtility.PingObject(asset);
-            // Selection.activeObject = asset;
             EditorUtility.SetDirty(this);
+
+            AssetDatabase.Refresh();
 #endif
         }
 
+#if UNITY_EDITOR
+        private TracerInfo CreateTracerInfo()
+        {
+            TracerInfo asset = ScriptableObject.CreateInstance("TracerInfo") as TracerInfo;
+            asset.SavePath(GetComponentsInChildren<TracePoint>());
+
+            return asset;
+        }
+
+#endif
         public void DeleteAllPoints()
         {
             TracePoint[] tracePoints = GetComponentsInChildren<TracePoint>();

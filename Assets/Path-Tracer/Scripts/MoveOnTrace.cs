@@ -59,7 +59,7 @@ namespace path
             }
         }
 
-        private TracerInfo.TransformType _transformType;
+        private TransformType _transformType;
 
         protected void Awake()
         {
@@ -126,7 +126,7 @@ namespace path
             if (!_isMoving || _target == null)
                 return;
 
-            if (_transformType == TracerInfo.TransformType.Global)
+            if (_transformType == TransformType.Global)
             {
                 _target.position = Vector3.MoveTowards(_target.position, _nextPosition, _movingSpeed * Time.fixedDeltaTime);
                 if (Vector3.Distance(_target.position, _nextPosition) <= 0.05f)

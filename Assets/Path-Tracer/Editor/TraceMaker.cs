@@ -7,6 +7,7 @@ namespace path
     [CanEditMultipleObjects]
     public class TraceMaker : Editor
     {
+        SerializedProperty activeInstantiates;
         SerializedProperty localScaleInstantiateObject;
         SerializedProperty instantiateObject;
         SerializedProperty tracerName;
@@ -16,6 +17,7 @@ namespace path
         {
             localScaleInstantiateObject = serializedObject.FindProperty("localScaleInstantiateObject");
             instantiateObject = serializedObject.FindProperty("instantiateObject");
+            activeInstantiates = serializedObject.FindProperty("activeInstantiates");
             tracerName = serializedObject.FindProperty("tracerName");
             replacePath = serializedObject.FindProperty("replacePath");
         }
@@ -28,16 +30,21 @@ namespace path
 
             EditorGUILayout.LabelField("Settings", header);
 
-            serializedObject.Update();
-            EditorGUILayout.PropertyField(localScaleInstantiateObject);
-            EditorGUILayout.PropertyField(instantiateObject);
-            EditorGUILayout.PropertyField(tracerName);
-            EditorGUILayout.PropertyField(replacePath);
-
             TraceManager traceManager = (TraceManager)target;
 
+            serializedObject.Update();
+
+            EditorGUILayout.PropertyField(activeInstantiates);
+            if (traceManager.activeInstantiates)
+            {
+                EditorGUILayout.PropertyField(instantiateObject);
+                EditorGUILayout.PropertyField(localScaleInstantiateObject);
+            }
+
+            EditorGUILayout.PropertyField(tracerName);
+            EditorGUILayout.PropertyField(replacePath);
             GUILayout.BeginHorizontal("box");
-            GUILayout.Label("Path Info saved in:   " + traceManager.path);
+            GUILayout.Label("Path Info saved in:   " + traceManager.pathFile);
             GUILayout.EndHorizontal();
 
             EditorGUILayout.LabelField("Buttons", header);

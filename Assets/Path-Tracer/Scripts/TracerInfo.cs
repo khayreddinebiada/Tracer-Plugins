@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace path
 {
@@ -25,11 +24,6 @@ namespace path
     [CreateAssetMenu(fileName = "TraceInfo", menuName = "Tracer/Path", order = 3)]
     public class TracerInfo : ScriptableObject
     {
-        public enum TransformType
-        {
-            Local, Global
-        }
-
         [SerializeField]
         private TransformType _transformType;
         public TransformType transformType
@@ -92,6 +86,12 @@ namespace path
             {
                 _totalDistance  += Vector3.Distance(points[i].position, points[i - 1].position);
             }
+        }
+
+        public void ReplacePoints(PointInfo[] points, TransformType transformType)
+        {
+            _points = points;
+            _transformType = transformType;
         }
     }
 }
