@@ -11,14 +11,13 @@ namespace path
 
     public class TraceManager : MonoBehaviour
     {
+
         public bool activeInstantiates;
         public Vector3 localScaleInstantiateObject = new Vector3(1, 1, 1);
         public GameObject instantiateObject;
-
         public bool replacePath = false;
-
-        
-        public string tracerName = "PathInfo";
+        public TransformType transformType = TransformType.Global;
+        public string tracerName = "Name";
         private string _folderName = "Paths";
 
         private string _pathFolder = "/Resources/";
@@ -103,22 +102,27 @@ namespace path
                     AssetDatabase.CreateAsset(asset, AssetDatabase.GenerateUniqueAssetPath("Assets" + pathFile + "/" + tracerName + ".asset"));
                 }
 
-                asset.SavePath(GetComponentsInChildren<TracePoint>());
+                asset.SavePath(GetComponentsInChildren<TracePoint>(), transformType);
             }
 
-            AssetDatabase.SaveAssets();
+            if (replacePath && EditorUtility.DisplayDialog("Confirmation", "Are you sure you want to replace path and lose the old one ?", "Replace", "Cancel"))
+            {
+                AssetDatabase.SaveAssets();
+                LoadPathManager loadPathManager = GetComponent<LoadPathManager>();
 
-            LoadPathManager loadPathManager = GetComponent<LoadPathManager>();
+                if (loadPathManager != null)
+                    loadPathManager.tracerInfo = asset;
 
-            if (loadPathManager != null)
-                loadPathManager.tracerInfo = asset;
+                EditorUtility.FocusProjectWindow();
 
-            EditorUtility.FocusProjectWindow();
+                EditorGUIUtility.PingObject(asset);
+                EditorUtility.SetDirty(this);
 
-            EditorGUIUtility.PingObject(asset);
-            EditorUtility.SetDirty(this);
+                AssetDatabase.Refresh();
 
-            AssetDatabase.Refresh();
+                Debug.Log("The path is replaced!");
+            }
+
 #endif
         }
 
@@ -126,7 +130,7 @@ namespace path
         private TracerInfo CreateTracerInfo()
         {
             TracerInfo asset = ScriptableObject.CreateInstance("TracerInfo") as TracerInfo;
-            asset.SavePath(GetComponentsInChildren<TracePoint>());
+            asset.SavePath(GetComponentsInChildren<TracePoint>(), transformType);
 
             return asset;
         }

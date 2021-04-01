@@ -46,14 +46,21 @@ namespace path
             set { _points = value; }
         }
 
-        public void SavePath(TracePoint[] tracePoints)
+        public void SavePath(TracePoint[] tracePoints, TransformType transformType)
         {
             points = new PointInfo[tracePoints.Length];
+            _transformType = transformType;
 
             for (int i = 0; i < tracePoints.Length; i++)
             {
-                PointInfo pInfo = new PointInfo(tracePoints[i].transform.position, tracePoints[i].transform.rotation);
+                PointInfo pInfo = new PointInfo
+                    (
+                    (transformType == TransformType.Global) ? tracePoints[i].transform.position : tracePoints[i].transform.localPosition,
+                    (transformType == TransformType.Global) ? tracePoints[i].transform.rotation : tracePoints[i].transform.localRotation
+                     );
+
                 points[i] = pInfo;
+
             }
 
             CalculateDistance();
@@ -71,10 +78,12 @@ namespace path
                 if (_transformType == TransformType.Global)
                 {
                     point.transform.position = _points[i].position;
+                    point.transform.rotation = _points[i].rotation;
                 }
                 else
                 {
                     point.transform.localPosition = _points[i].position;
+                    point.transform.localRotation = _points[i].rotation;
                 }
             }
         }

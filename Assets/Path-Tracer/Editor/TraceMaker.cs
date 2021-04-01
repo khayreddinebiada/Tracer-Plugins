@@ -12,6 +12,7 @@ namespace path
         SerializedProperty instantiateObject;
         SerializedProperty tracerName;
         SerializedProperty replacePath;
+        SerializedProperty transformType;
 
         private void OnEnable()
         {
@@ -20,6 +21,7 @@ namespace path
             activeInstantiates = serializedObject.FindProperty("activeInstantiates");
             tracerName = serializedObject.FindProperty("tracerName");
             replacePath = serializedObject.FindProperty("replacePath");
+            transformType = serializedObject.FindProperty("transformType");
         }
 
         public override void OnInspectorGUI()
@@ -41,6 +43,7 @@ namespace path
                 EditorGUILayout.PropertyField(localScaleInstantiateObject);
             }
 
+            EditorGUILayout.PropertyField(transformType);
             EditorGUILayout.PropertyField(tracerName);
             EditorGUILayout.PropertyField(replacePath);
             GUILayout.BeginHorizontal("box");
