@@ -676,24 +676,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useGizmas: 1
---- !u!114 &430081619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8824798981937289690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c4487fa155db9f47a558f282785a76a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isMoving: 1
-  _movingSpeed: 10
-  _isLooping: 1
-  _points: {fileID: 11400000, guid: 455bc0874c709934ebc5b6da5f255487, type: 2}
-  _initializeByFirstPoint: 1
-  _target: {fileID: 8824798981937289689}
 --- !u!1 &520391744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,7 +1953,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1900946830
 GameObject:
@@ -2062,6 +2044,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useGizmas: 1
+--- !u!1 &1995511576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1995511577}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1995511577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995511576}
+  m_LocalRotation: {x: -0, y: -0.41261208, z: -0, w: 0.9109069}
+  m_LocalPosition: {x: -0.71267956, y: -0.97825766, z: 1.6964729}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 8824798981937289689}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -48.738003, z: 0}
 --- !u!1 &2034407512
 GameObject:
   m_ObjectHideFlags: 0
@@ -2400,7 +2413,7 @@ Transform:
   - {fileID: 2042149189}
   - {fileID: 905113626}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: -65.995, z: 0}
 --- !u!4 &8824798981937289689
 Transform:
@@ -2410,13 +2423,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8824798981937289690}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.72167957, y: -0.9312577, z: 1.9277344}
+  m_LocalPosition: {x: 1.087, y: 0.04699993, z: 1.343}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8824798982665793677}
   - {fileID: 8824798982765748379}
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 1995511577}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8824798981937289690
 GameObject:
@@ -2427,7 +2440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8824798981937289689}
-  - component: {fileID: 430081619}
+  - component: {fileID: 8824798981937289691}
   m_Layer: 0
   m_Name: Hammer Body Dynamic
   m_TagString: Untagged
@@ -2435,6 +2448,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8824798981937289691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8824798981937289690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3302307890598949886d855d31eade9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isMoving: 1
+  _movingSpeed: 10
+  _isLooping: 1
+  _points: {fileID: 11400000, guid: dd67bc63db51e694ea6bbb657f70bbf2, type: 2}
+  _initializeByFirstPoint: 1
+  _target: {fileID: 8824798981937289689}
 --- !u!33 &8824798982665793674
 MeshFilter:
   m_ObjectHideFlags: 0

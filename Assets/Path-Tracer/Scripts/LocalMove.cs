@@ -2,7 +2,7 @@
 
 namespace path
 {
-    public class MoveOnPattern : MonoBehaviour
+    public class LocalMove : MonoBehaviour
     {
         [Header("Transformation")]
         [SerializeField]
@@ -39,10 +39,6 @@ namespace path
         protected Vector3 _nextPosition;
         protected int _indexNextPoint;
 
-        private Vector3 _rangePosition;
-
-        private float _distanceToNext;
-        private Vector3 _directionMove;
 
         public delegate void Action();
         private event Action _onPathEnd;
@@ -101,16 +97,13 @@ namespace path
             {
                 _indexNextPoint = 1;
                 _nextPosition = _points.points[_indexNextPoint].position;
-                _target.position = _points.points[0].position;
-
+                _target.localPosition = _points.points[0].position;
             }
             else
             {
                 _indexNextPoint = 0;
                 _nextPosition = _points.points[_indexNextPoint].position;
             }
-
-            UpdateDistance();
         }
 
         // Update is called once per frame
@@ -119,19 +112,8 @@ namespace path
             if (!_isMoving || _target == null)
                 return;
 
-            float speed = Time.fixedDeltaTime * _movingSpeed;
-            Vector3 vect = _directionMove * speed;
-
-            if (vect.magnitude < _distanceToNext)
-                _target.position += vect;
-            else
-            {
-                _target.position += _distanceToNext * _directionMove;
-            }
-
-            _distanceToNext = Mathf.Clamp(_distanceToNext - _directionMove.magnitude * speed, 0, Mathf.Infinity);
-
-            if (_distanceToNext <= 0)
+            _target.localPosition = Vector3.MoveTowards(_target.localPosition, _nextPosition, _movingSpeed * Time.fixedDeltaTime);
+            if (Vector3.Distance(_target.localPosition, _nextPosition) <= 0.05f)
             {
                 GoNext();
             }
@@ -139,28 +121,18 @@ namespace path
 
         private void GoNext()
         {
-            _rangePosition += _target.position - _nextPosition;
-            _indexNextPoint++;
+            _target.localPosition = _points.points[_indexNextPoint].position;
 
+            _indexNextPoint++;
             if (_indexNextPoint == _points.points.Length)
             {
                 EndPath();
                 _indexNextPoint = 0;
             }
 
-            _nextPosition = _points.points[_indexNextPoint].position + _rangePosition;
-
-            if (_points.transformType == TransformType.Local)
-                _nextPosition = transform.TransformDirection(_nextPosition);
-
-            UpdateDistance();
+            _nextPosition = _points.points[_indexNextPoint].position;
         }
 
-        private void UpdateDistance()
-        {
-            _distanceToNext = Vector3.Distance(transform.position, _nextPosition);
-            _directionMove = Vector3.ClampMagnitude(_nextPosition - transform.position, 1);
-        }
 
         private void EndPath()
         {
